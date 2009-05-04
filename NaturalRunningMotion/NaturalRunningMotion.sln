@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRM", "NRM\NRM.csproj", "{AA0CD852-FD13-47E1-9AD1-4E912C5BAB80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRM.OO", "NRM.OO\NRM.OO.csproj", "{C9FAA6D5-5FA4-4DB9-AEA5-E8F5D85650F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRM.Analytics", "NRM.Analitics\NRM.Analytics.csproj", "{64250052-8ED5-4280-A8E7-406BF6C014EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA0CD852-FD13-47E1-9AD1-4E912C5BAB80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0CD852-FD13-47E1-9AD1-4E912C5BAB80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0CD852-FD13-47E1-9AD1-4E912C5BAB80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0CD852-FD13-47E1-9AD1-4E912C5BAB80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9FAA6D5-5FA4-4DB9-AEA5-E8F5D85650F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9FAA6D5-5FA4-4DB9-AEA5-E8F5D85650F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9FAA6D5-5FA4-4DB9-AEA5-E8F5D85650F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9FAA6D5-5FA4-4DB9-AEA5-E8F5D85650F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64250052-8ED5-4280-A8E7-406BF6C014EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64250052-8ED5-4280-A8E7-406BF6C014EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64250052-8ED5-4280-A8E7-406BF6C014EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64250052-8ED5-4280-A8E7-406BF6C014EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
