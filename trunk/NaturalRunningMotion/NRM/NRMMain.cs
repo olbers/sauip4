@@ -177,5 +177,11 @@ namespace NRM
         {
             readFlag = false;
         }
+
+        private void _buttonClearData_Click(object sender, EventArgs e)
+        {
+            _wiimoteAccelValues.Clear();
+            _nunchukAccelValues.Clear();
+        }
     }
 }

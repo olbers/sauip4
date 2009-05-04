@@ -41,6 +41,7 @@
             this._textBoxWiiData = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this._buttonClearData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // _buttonStart
@@ -166,11 +167,22 @@
             this.label5.Text = "Wiimote Data:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // _buttonClearData
+            // 
+            this._buttonClearData.Location = new System.Drawing.Point(267, 4);
+            this._buttonClearData.Name = "_buttonClearData";
+            this._buttonClearData.Size = new System.Drawing.Size(109, 39);
+            this._buttonClearData.TabIndex = 12;
+            this._buttonClearData.Text = "Clear Data";
+            this._buttonClearData.UseVisualStyleBackColor = true;
+            this._buttonClearData.Click += new System.EventHandler(this._buttonClearData_Click);
+            // 
             // NRMMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(427, 234);
+            this.Controls.Add(this._buttonClearData);
             this.Controls.Add(this._textBoxNunData);
             this.Controls.Add(this._textBoxWiiData);
             this.Controls.Add(this.label4);
@@ -208,6 +220,7 @@
         private System.Windows.Forms.TextBox _textBoxWiiData;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button _buttonClearData;
     }
 }
 
