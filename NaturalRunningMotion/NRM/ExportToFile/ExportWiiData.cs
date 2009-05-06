@@ -10,7 +10,7 @@ namespace NRM.ExportToFile
     /// <summary>
     /// Auxiliar class that allows exporting the data from the nunchuk
     /// </summary>
-    public static class ExportData
+    public static class ExportWiiData
     {
         public static void ExportDataToCSV(string path, WiiDataColl wii, WiiDataColl nun)
         {

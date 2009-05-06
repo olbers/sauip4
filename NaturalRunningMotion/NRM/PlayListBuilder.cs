@@ -8,11 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 using NRM.Analytics;
 using System.Runtime.InteropServices;
+using NRM.OO;
+using NRM.ExportToFile;
 
 namespace NRM
 {
     public partial class PlayListBuilder : Form
     {
+        private bool disposedSound = false;
         private FMOD.System     system = null;
         private FMOD.Sound      sound = null;
         private FMOD.Channel    channel = null;
@@ -24,18 +27,30 @@ namespace NRM
         private static StringBuilder    name = new StringBuilder(256);
         private static FMOD.DSP         thisdsp = new FMOD.DSP();
 
-        private OpenFileDialog openFileDialog1;
-
-
         private static BPMDetection bpm = new BPMDetection();
 
-        private System.Windows.Forms.Timer timer1;
+        private SongDataColl        _songCollection = new SongDataColl();
+        private SongData            _currentSong = null;
 
         public PlayListBuilder()
         {
             InitializeComponent();
+
+            InitializeCollections();
         }
-        private void PlayListBuilder_Load(object sender, EventArgs e)
+
+        private void InitializeCollections()
+        {
+            _dgPlaylist.AutoGenerateColumns = false;
+            _bindingSourcePlaylist.DataSource = _songCollection;
+
+            _dgPlaylist.DataSource = _bindingSourcePlaylist;
+            
+        }
+        /// <summary>
+        /// Initialize variable 
+        /// </summary>
+        private void Initialize()
         {
             uint version = 0;
             FMOD.RESULT result;
@@ -57,53 +72,111 @@ namespace NRM
             system.setSoftwareFormat(44100, FMOD.SOUND_FORMAT.PCM16, 2, 0, FMOD.DSP_RESAMPLER.CUBIC);
             result = system.init(32, FMOD.INITFLAG.NORMAL, (IntPtr)null);
             ERRCHECK(result);
-
         }
+        /// <summary>
+        /// Button open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _buttonCalculate_Click(object sender, EventArgs e)
         {
-            FMOD.RESULT result = FMOD.RESULT.OK;
+            Initialize();
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (mydsp != null)
+                _currentSong = new SongData() { FullName = openFileDialog1.FileName };
+                bool exists = false;
+                foreach (var item in _songCollection)
                 {
-                    mydsp.remove();
+                    if (item.FullName == _currentSong.FullName)
+                    {
+                        exists = true;
+                        break;
+                    }
                 }
-
-                if (sound != null)
+                if (!exists)
                 {
-                    result = sound.release();
-                    ERRCHECK(result);
+
+                    PlayMusic();
+                    timer1.Start();
                 }
-
-                bpm.reset();
-
-                result = system.createSound(openFileDialog1.FileName, FMOD.MODE.SOFTWARE | FMOD.MODE.CREATESTREAM, ref sound);
-                ERRCHECK(result);
-
-                result = system.playSound(FMOD.CHANNELINDEX.FREE, sound, true, ref channel);
-                ERRCHECK(result);
-
-                /*
-                    Create DSP unit
-                */
-                dspdesc.name = dspname.ToCharArray(0, 32);
-                dspdesc.channels = 0;
-                dspdesc.read = dspreadcallback;
-
-                result = system.createDSP(ref dspdesc, ref mydsp);
-                ERRCHECK(result);
-
-                result = system.addDSP(mydsp);
-                ERRCHECK(result);
-
-                result = mydsp.setActive(true);
-                ERRCHECK(result);
-
-                channel.setPaused(false);
-                timer1.Start();
+                else
+                {
+                    MessageBox.Show("This song is already in the playlist.",
+                     "Song already in the playlist.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
+        /// <summary>
+        /// Method responsible for getting the file and playing the song
+        /// </summary>
+        private void PlayMusic()
+        {
+            FMOD.RESULT result = FMOD.RESULT.OK;
+
+            if (mydsp != null)
+            {
+                mydsp.remove();
+            }
+
+            if (sound != null)
+            {
+                result = sound.release();
+                ERRCHECK(result);
+            }
+
+            bpm.reset();
+
+            result = system.createSound(openFileDialog1.FileName, FMOD.MODE.SOFTWARE | FMOD.MODE.CREATESTREAM, ref sound);
+            ERRCHECK(result);
+
+            result = system.playSound(FMOD.CHANNELINDEX.FREE, sound, true, ref channel);
+            ERRCHECK(result);
+
+            /*
+                Create DSP unit
+            */
+            dspdesc.name = dspname.ToCharArray(0, 32);
+            dspdesc.channels = 0;
+            dspdesc.read = dspreadcallback;
+
+            result = system.createDSP(ref dspdesc, ref mydsp);
+            ERRCHECK(result);
+
+            result = system.addDSP(mydsp);
+            ERRCHECK(result);
+
+            result = mydsp.setActive(true);
+            ERRCHECK(result);
+
+            channel.setPaused(false);
+        }
+        /// <summary>
+        /// Method responsible for disposing the variables that play the songs
+        /// </summary>
+        private void DisposeSound()
+        {
+            timer1.Stop();
+            FMOD.RESULT result;
+
+            if (sound != null)
+            {
+                result = sound.release();
+                ERRCHECK(result);
+            }
+            sound = null;
+
+            if (system != null)
+            {
+                result = system.close();
+                ERRCHECK(result);
+
+                result = system.release();
+                ERRCHECK(result);
+            }
+            mydsp = null;
+        }
+
         /// <summary>
         /// timer tick event to update the interface
         /// </summary>
@@ -111,14 +184,39 @@ namespace NRM
         /// <param name="e"></param>
         private void timer1_Tick(object sender, System.EventArgs e)
         {
-            _textBoxBPM.Text = "BPM: " + bpm.getParameter(BPMDetection.BPMParam.BPMFOUNDBPM).ToString("0.00") +
+            _textboxSongPlaying.Text = _currentSong.Name; 
+            _textBoxBPM.Text =
+                "BPM: " + bpm.getParameter(BPMDetection.BPMParam.BPMFOUNDBPM).ToString("0.00") +
                 " | Accuracy: " + bpm.getParameter(BPMDetection.BPMParam.BPMNROFBEATS).ToString("00") +
                 " | Accuracy: " + bpm.getParameter(BPMDetection.BPMParam.BPMBEATLOOP).ToString("0");
+            
+            //Adicionar musica à playlist após detecção dos BPM's
+            if (
+                Convert.ToInt32(
+                            bpm.getParameter(BPMDetection.BPMParam.BPMNROFBEATS).ToString("00")
+                            ) >= 5)
+            {
+                DisposeSound();
+                disposedSound = true;
+                
+                _textboxSongPlaying.Text = _textBoxBPM.Text = "";
 
+                AddMusicToCollection();
+                
+            }   
             system.update();
         }
         /// <summary>
-        /// REadcallback
+        /// Method that adds a song to the collection through the databind
+        /// </summary>
+        private void AddMusicToCollection()
+        {
+            _currentSong.BPM = Convert.ToInt32(bpm.getParameter(BPMDetection.BPMParam.BPMFOUNDBPM).ToString("00")); 
+            _bindingSourcePlaylist.Add(_currentSong);
+
+        }
+        /// <summary>
+        /// Readcallback
         /// </summary>
         /// <param name="dsp_state"></param>
         /// <param name="inbuf"></param>
@@ -166,6 +264,45 @@ namespace NRM
             }
         }
 
+        private void _buttonExportPlaylist_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(_textBoxDistance.Text) || string.IsNullOrEmpty(_textBoxDuration.Text))
+            {
+                MessageBox.Show("Please insert the distance and duration of your run.", "Export Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (string.IsNullOrEmpty(_textBoxDistance.Text)) _textBoxDistance.Focus();
+                else _textBoxDuration.Focus();
+                return;
+            }
+            ExportPlaylist();
+        }
+
+        private void ExportPlaylist()
+        {
+            BPMInterval bpmInterval = new BPMInterval();
+            bpmInterval = NRMAnalytics.GetBPM(
+                Convert.ToInt32(_textBoxDistance.Text),
+                Convert.ToInt32(_textBoxDuration.Text));
+            //TODO:Remove this code and determine the calculator formula
+            bpmInterval.MinBPM = 0;
+            bpmInterval.MaxBPM = 200;
+
+            SongDataColl playlist = GetSongsWithBPM(bpmInterval);
+            string path = "c:\\";
+            ExportPlaylistToXML.ExportPlaylist(playlist, path);
+            
+            MessageBox.Show("Playlist exported to the folder: " + path, "Export Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private SongDataColl GetSongsWithBPM(BPMInterval bpmInterval)
+        {
+            SongDataColl playlist = new SongDataColl();
+            foreach (var song in _songCollection)
+            {
+                if( song.BPM <= bpmInterval.MaxBPM && song.BPM >= bpmInterval.MinBPM )
+                    playlist.Add(song);
+            }
+            return playlist;
+        }
 
     }
 }

@@ -17,7 +17,7 @@ namespace NRM.Analytics
         /// <param name="distance">Distance to run</param>
         /// <param name="timeMinutes">Time to run</param>
         /// <returns>Interval of BPM's determined by a minimun and maximum BPM</returns>
-        public static BPMInterval GetBPM(float distance, int timeMinutes)
+        public static BPMInterval GetBPM(int distance, int timeMinutes)
         {
             float bpm = CalculateBPM(distance, timeMinutes);
 
@@ -32,7 +32,7 @@ namespace NRM.Analytics
         /// <param name="distance">Distance to run</param>
         /// <param name="timeMinutes">Time to do the run in minutes</param>
         /// <returns></returns>
-        private static float CalculateBPM(float distance, int timeMinutes)
+        private static float CalculateBPM(int distance, int timeMinutes)
         {
             float bpm = distance / timeMinutes;
             return bpm;

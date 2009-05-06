@@ -158,7 +158,7 @@ namespace NRM
         {
             try
             {
-                ExportData.ExportDataToCSV(_textBoxExportPath.Text, _wiimoteAccelValues, _nunchukAccelValues);
+                ExportWiiData.ExportDataToCSV(_textBoxExportPath.Text, _wiimoteAccelValues, _nunchukAccelValues);
             }
             catch (System.IO.DirectoryNotFoundException)
             {
