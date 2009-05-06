@@ -23,9 +23,11 @@ namespace NRM
                 PlayListBuilder pl = new PlayListBuilder();
                 pl.Show();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("There was an error when trying to opening the aplication.\nPlease try again. If the persists contact the application developers.",
+                MessageBox.Show(
+                    "There was an error when trying to opening the aplication.\nPlease try again. If the persists contact the application developers." + 
+                    "\n\nInner Error: " + ex.Message,
                     "Error opening playlist builder's form", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

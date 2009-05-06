@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BPMInterval.cs" />
+    <Compile Include="SongData.cs" />
+    <Compile Include="SongDataColl.cs" />
     <Compile Include="WiiData.cs" />
     <Compile Include="WiiDataColl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

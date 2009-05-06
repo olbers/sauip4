@@ -57,7 +57,8 @@
     <Compile Include="BPM\fmod.cs" />
     <Compile Include="BPM\fmod_dsp.cs" />
     <Compile Include="BPM\fmod_errors.cs" />
-    <Compile Include="ExportToFile\ExportData.cs" />
+    <Compile Include="ExportToFile\ExportPlaylistToXML.cs" />
+    <Compile Include="ExportToFile\ExportWiiData.cs" />
     <Compile Include="NRMMain.cs">
       <SubType>Form</SubType>
     </Compile>
