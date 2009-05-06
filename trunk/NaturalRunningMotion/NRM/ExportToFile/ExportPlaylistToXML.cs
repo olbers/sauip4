@@ -10,36 +10,11 @@ namespace NRM.ExportToFile
     public static class ExportPlaylistToXML
     {
         /// <summary>
-        /// property that contains the XMLDocument with the xml 
-        /// structure and data of the playlist
+        /// Method responsible for building the xml document and flushing it to the output path
         /// </summary>
-        public static XmlDocument XmlPlaylist { get; set; }
-        /// <summary>
-        /// Method that creates the XMLDocument
-        /// </summary>
-        public static void CreateFile ()
-	    {
-            if (!File.Exists("playlist.xml"))
-            {
-                createXmlPlaylistDocument();
-            }
-
-            XmlPlaylist = new XmlDocument();
-            XmlPlaylist.Load("playlist.xml");
-            XmlElement xmlRoot = XmlPlaylist.DocumentElement;
-        }
-
-        public static void createXmlPlaylistDocument()
-        {
-            XmlTextWriter xmlPlaylist = new XmlTextWriter("playlist.xml", null);
-            xmlPlaylist.WriteStartDocument();
-            xmlPlaylist.WriteStartElement("Playlist");
-            xmlPlaylist.WriteEndElement();
-            xmlPlaylist.WriteEndDocument();
-            xmlPlaylist.Close();
-        }
-
-        internal static void ExportPlaylist(NRM.OO.SongDataColl playlist, string path)
+        /// <param name="playlist">Playlist that will be serialized in XML</param>
+        /// <param name="path">Destination folder of the playlist</param>
+        public static void ExportPlaylist(NRM.OO.SongDataColl playlist, string path)
         {
             XmlTextWriter xmlBuilder = new XmlTextWriter(path + "playlist.xml", null);
             xmlBuilder.WriteStartDocument();
