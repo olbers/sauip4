@@ -5,6 +5,9 @@ using System.Collections.ObjectModel;
 
 namespace NRM.OO
 {
+    /// <summary>
+    /// Collection of WiiData records
+    /// </summary>
     public class WiiDataColl:Collection<WiiData>
     {
     }

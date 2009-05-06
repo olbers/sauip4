@@ -7,5 +7,7 @@ namespace NRM.Analytics
 {
     public class BPMCalculator
     {
+
+
     }
 }

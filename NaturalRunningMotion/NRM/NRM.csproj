@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BPM\BPMDetection.cs" />
+    <Compile Include="BPM\fmod.cs" />
+    <Compile Include="BPM\fmod_dsp.cs" />
+    <Compile Include="BPM\fmod_errors.cs" />
     <Compile Include="ExportToFile\ExportData.cs" />
     <Compile Include="NRMMain.cs">
       <SubType>Form</SubType>
@@ -59,10 +64,30 @@
     <Compile Include="NRMMain.Designer.cs">
       <DependentUpon>NRMMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="NRMWiiConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NRMWiiConnect.Designer.cs">
+      <DependentUpon>NRMWiiConnect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlayListBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayListBuilder.Designer.cs">
+      <DependentUpon>PlayListBuilder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="NRMMain.resx">
       <DependentUpon>NRMMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NRMWiiConnect.resx">
+      <DependentUpon>NRMWiiConnect.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayListBuilder.resx">
+      <DependentUpon>PlayListBuilder.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -85,10 +110,23 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NRM.Analitics\NRM.Analytics.csproj">
+      <Project>{64250052-8ED5-4280-A8E7-406BF6C014EB}</Project>
+      <Name>NRM.Analytics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NRM.OO\NRM.OO.csproj">
       <Project>{C9FAA6D5-5FA4-4DB9-AEA5-E8F5D85650F9}</Project>
       <Name>NRM.OO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libraries\bpmDetect.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libraries\fmodex.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libraries\WiimoteLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
