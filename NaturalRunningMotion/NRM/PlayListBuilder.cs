@@ -263,7 +263,11 @@ namespace NRM
                 Environment.Exit(-1);
             }
         }
-
+        /// <summary>
+        /// Event handler of the Export Playlist button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _buttonExportPlaylist_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(_textBoxDistance.Text) || string.IsNullOrEmpty(_textBoxDuration.Text))
@@ -292,7 +296,11 @@ namespace NRM
             
             MessageBox.Show("Playlist exported to the folder: " + path, "Export Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
+        /// <summary>
+        /// Method that will filter the current playlist and return the songs that are acording to the correct BPM Interval
+        /// </summary>
+        /// <param name="bpmInterval"> Interval of BPM's allowed in the playlist</param>
+        /// <returns>Playlist of songs with the beats per minute acording to the passed interval</returns>
         private SongDataColl GetSongsWithBPM(BPMInterval bpmInterval)
         {
             SongDataColl playlist = new SongDataColl();
