@@ -17,5 +17,6 @@ namespace NRM.OO
         public int BPM { get; set; }
         [DataMember()]
         public string Length { get; set; }
+        public int LengthSeconds { get; set; }
     }
 }
