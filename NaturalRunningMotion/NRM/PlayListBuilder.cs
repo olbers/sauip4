@@ -342,8 +342,9 @@ namespace NRM
             }
             BPMInterval bpm = NRMAnalytics.GetBPM(int.Parse(_textBoxDistance.Text), int.Parse(_textBoxDuration.Text));
 
-            lBPM.Text = "" + (bpm.Value * int.Parse(_textBoxDuration.Text));
- 
+            lBPM.Text = "Total BPMs: " + (bpm.Value * int.Parse(_textBoxDuration.Text)) +
+                        "\nBPM: " + bpm.Value;
+            ExportPlaylist();
 
 
         }

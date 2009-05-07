@@ -19,19 +19,24 @@ namespace NRM.ExportToFile
         /// <param name="path">Destination folder of the playlist</param>
         public static void ExportPlaylist(NRM.OO.SongDataColl playlist, string path)
         {
-            string filename = path + "playlist.xml";
-            FileStream fs = new FileStream(filename, FileMode.Create);
-            // Create a generic List of types and add the known types
-            // to the collection.
-            List<Type> knownTypeList = new List<Type>();
-            knownTypeList.Add(typeof(SongDataColl));
-            knownTypeList.Add(typeof(SongData));            
-            
-            DataContractSerializer ser =
-                new DataContractSerializer(typeof(SongDataColl), knownTypeList);
+            try
+            {
+                string filename = path + "playlist.xml";
+                FileStream fs = new FileStream(filename, FileMode.Create);
+                // Create a generic List of types and add the known types
+                // to the collection.
+                List<Type> knownTypeList = new List<Type>();
+                knownTypeList.Add(typeof(SongDataColl));
+                knownTypeList.Add(typeof(SongData));
 
-            ser.WriteObject(fs, playlist);
-            fs.Close();
+                DataContractSerializer ser =
+                    new DataContractSerializer(typeof(SongDataColl), knownTypeList);
+
+                ser.WriteObject(fs, playlist);
+                fs.Close();
+            }
+            catch (Exception ex)
+            {  }
         }
         public static SongDataColl ImportPlaylist(string path)
         {
