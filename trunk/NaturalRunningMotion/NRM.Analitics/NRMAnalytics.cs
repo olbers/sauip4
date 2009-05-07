@@ -8,8 +8,23 @@ namespace NRM.Analytics
 {
     public static class NRMAnalytics
     {
-        public static WiiData     _wiiData;
-        public static BPMInterval   _bpmInterval;
+        public static Dictionary<int, int>  _bpm = new Dictionary<int, int>();
+        public static WiiData               _wiiData;
+        public static BPMInterval           _bpmInterval;
+        public static bool                  _initialized = false;
+        /// <summary>
+        /// Initialize bpm dictionary
+        /// </summary>
+        public static void InitializeBPMs()
+        {
+            _bpm.Add(10,150);
+            _bpm.Add(9, 153);
+            _bpm.Add(8, 156);
+            _bpm.Add(7, 160);
+            _bpm.Add(6, 163);
+            _bpm.Add(5, 166);
+            _initialized = true;
+        }
         /// <summary>
         /// Method that returns and interval of the BPM that a song should have to help a person
         /// run a certain distance in a certain time
@@ -34,7 +49,17 @@ namespace NRM.Analytics
         /// <returns></returns>
         private static float CalculateBPM(int distance, int timeMinutes)
         {
-            float bpm = distance / timeMinutes;
+            if(!_initialized)
+                InitializeBPMs();
+            float temp = timeMinutes * 1000 / distance;
+            float bpm = _bpm[10];
+
+            foreach (var item in _bpm)
+        	{
+                if (item.Key == temp)
+                    break;
+                                    
+	        }
             return bpm;
         }
     }
