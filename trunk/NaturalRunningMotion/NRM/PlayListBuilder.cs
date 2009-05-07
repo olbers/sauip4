@@ -7,6 +7,7 @@ using NRM.ExportToFile;
 using System.Windows.Media;
 using System.Threading;
 using System.Windows;
+using System.IO;
 
 namespace NRM
 {
@@ -42,7 +43,7 @@ namespace NRM
         public PlayListBuilder()
         {
             InitializeComponent();
-            _songCollection = LoadPlaylist(@"c:\playlist1.xml");
+           // _songCollection = LoadPlaylist(@"playlist.xml");
             InitializeBindings();
         }
         /// <summary>
@@ -52,6 +53,10 @@ namespace NRM
         /// <returns></returns>
         private SongDataColl LoadPlaylist(string path)
         {
+            if (!File.Exists(path))
+            {
+                PlaylistToXML.ExportPlaylist(new SongDataColl(), path);
+            }
             return PlaylistToXML.ImportPlaylist(path);
         }
         /// <summary>
@@ -358,7 +363,8 @@ namespace NRM
             MediaPlayer player = new MediaPlayer();
             Uri path = new Uri(@filename);
             player.Open(path);
-            Thread.Sleep(1000);
+           
+            Thread.Sleep(3000);
             Duration duration = player.NaturalDuration;
 
             if (duration.HasTimeSpan)
