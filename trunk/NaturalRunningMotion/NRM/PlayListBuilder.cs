@@ -42,7 +42,17 @@ namespace NRM
         public PlayListBuilder()
         {
             InitializeComponent();
+            _songCollection = LoadPlaylist(@"c:\playlist1.xml");
             InitializeBindings();
+        }
+        /// <summary>
+        /// Load Playlist from previously created xml file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private SongDataColl LoadPlaylist(string path)
+        {
+            return PlaylistToXML.ImportPlaylist(path);
         }
         /// <summary>
         /// Bindings Initialization
@@ -318,7 +328,7 @@ namespace NRM
 
             SongDataColl playlist = GetSongsWithBPM(bpmInterval);
             string path = "c:\\";
-            ExportPlaylistToXML.ExportPlaylist(playlist, path);
+            PlaylistToXML.ExportPlaylist(playlist, path);
             
             MessageBox.Show("Playlist exported to the folder: " + path, "Export Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
