@@ -43,7 +43,7 @@ namespace NRM
         public PlayListBuilder()
         {
             InitializeComponent();
-           // _songCollection = LoadPlaylist(@"playlist.xml");
+            _songCollection = LoadPlaylist(@"c:\playlist.xml");
             InitializeBindings();
         }
         /// <summary>

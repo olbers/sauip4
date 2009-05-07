@@ -35,20 +35,28 @@ namespace NRM.ExportToFile
         }
         public static SongDataColl ImportPlaylist(string path)
         {
+            SongDataColl cll = null;
             // Deserialize an instance of the class 
             // from an XML file. First create an instance of the 
             // XmlDictionaryReader.
-            FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
-            XmlDictionaryReader reader =
-                XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
+                XmlDictionaryReader reader =
+                    XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
 
-            // Create the DataContractSerializer instance.
-            DataContractSerializer ser =
-                new DataContractSerializer(typeof(SongDataColl));
+                // Create the DataContractSerializer instance.
+                DataContractSerializer ser =
+                    new DataContractSerializer(typeof(SongDataColl));
 
-            // Deserialize the data and read it from the instance.
-            SongDataColl cll = (SongDataColl)ser.ReadObject(reader);
-            fs.Close();
+                // Deserialize the data and read it from the instance.
+                cll = (SongDataColl)ser.ReadObject(reader);
+                fs.Close();
+            }
+            catch (Exception ex)
+            {
+                cll = new SongDataColl();
+            }
             return cll;
         }
 

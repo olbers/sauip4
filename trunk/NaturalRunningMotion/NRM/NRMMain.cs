@@ -27,7 +27,7 @@ namespace NRM
             {
                 MessageBox.Show(
                     "There was an error when trying to opening the aplication.\nPlease try again. If the persists contact the application developers." + 
-                    "\n\nInner Error: " + ex.Message,
+                    "\n\nInner Error: " + ex.ToString(),
                     "Error opening playlist builder's form", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

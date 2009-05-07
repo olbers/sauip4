@@ -21,5 +21,19 @@
       <FileName>BPMInterval.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="NRM.OO.SongData">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAARAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SongData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NRM.OO.SongDataColl">
+    <Position X="5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SongDataColl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>
