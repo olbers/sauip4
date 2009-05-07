@@ -9,7 +9,7 @@ using NRM.OO;
 
 namespace NRM.ExportToFile
 {
-    public static class ExportPlaylistToXML
+    public static class PlaylistToXML
     {
         /// <summary>
         /// Method responsible for the serialization (Using the new DataContract Serializer .NET 3.5 )
@@ -20,10 +20,7 @@ namespace NRM.ExportToFile
         public static void ExportPlaylist(NRM.OO.SongDataColl playlist, string path)
         {
             string filename = path + "playlist.xml";
-
-
             FileStream fs = new FileStream(filename, FileMode.Create);
-
             // Create a generic List of types and add the known types
             // to the collection.
             List<Type> knownTypeList = new List<Type>();
@@ -36,5 +33,24 @@ namespace NRM.ExportToFile
             ser.WriteObject(fs, playlist);
             fs.Close();
         }
+        public static SongDataColl ImportPlaylist(string path)
+        {
+            // Deserialize an instance of the class 
+            // from an XML file. First create an instance of the 
+            // XmlDictionaryReader.
+            FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
+            XmlDictionaryReader reader =
+                XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+
+            // Create the DataContractSerializer instance.
+            DataContractSerializer ser =
+                new DataContractSerializer(typeof(SongDataColl));
+
+            // Deserialize the data and read it from the instance.
+            SongDataColl cll = (SongDataColl)ser.ReadObject(reader);
+            fs.Close();
+            return cll;
+        }
+
     }
 }
