@@ -1,56 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NRM.Analytics;
-using System.Runtime.InteropServices;
 using NRM.OO;
 using NRM.ExportToFile;
+using System.Windows.Media;
+using System.Threading;
+using System.Windows;
 
 namespace NRM
 {
     public partial class PlayListBuilder : Form
     {
-        private bool disposedSound = false;
-        private FMOD.System     system = null;
-        private FMOD.Sound      sound = null;
-        private FMOD.Channel    channel = null;
-        private FMOD.DSP        mydsp = null;
-
-        private FMOD.DSP_DESCRIPTION    dspdesc = new FMOD.DSP_DESCRIPTION();
-        private String                  dspname = "BPM Detection DSP                 ";
+        /// <summary>
+        /// fields related to the song play
+        /// </summary>
+        private bool                    disposedSound   = false;
+        private FMOD.System             system          = null;
+        private FMOD.Sound              sound           = null;
+        private FMOD.Channel            channel         = null;
+        private FMOD.DSP                mydsp           = null;
+        private FMOD.DSP_DESCRIPTION    dspdesc         = new FMOD.DSP_DESCRIPTION();
+        private String                  dspname         = "BPM Detection DSP                 ";
         private FMOD.DSP_READCALLBACK   dspreadcallback = new FMOD.DSP_READCALLBACK(READCALLBACK);
-        private static StringBuilder    name = new StringBuilder(256);
-        private static FMOD.DSP         thisdsp = new FMOD.DSP();
+        private static StringBuilder    name            = new StringBuilder(256);
+        private static FMOD.DSP         thisdsp         = new FMOD.DSP();
+        private static BPMDetection     bpm             = new BPMDetection();
+        
+        /// <summary>
+        /// fields to handle data
+        /// </summary>
+        private SongDataColl            _songCollection = new SongDataColl();
+        private SongData                _currentSong    = null;
 
-        private static BPMDetection bpm = new BPMDetection();
+        private SongDataColl            _newSongCollection = new SongDataColl();
+        private int                     _currentPosition   = 0;
 
-        private SongDataColl        _songCollection = new SongDataColl();
-        private SongData            _currentSong = null;
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public PlayListBuilder()
         {
             InitializeComponent();
-
-            InitializeCollections();
+            InitializeBindings();
         }
-
-        private void InitializeCollections()
+        /// <summary>
+        /// Bindings Initialization
+        /// </summary>
+        private void InitializeBindings()
         {
             _dgPlaylist.AutoGenerateColumns = false;
             _bindingSourcePlaylist.DataSource = _songCollection;
-
             _dgPlaylist.DataSource = _bindingSourcePlaylist;
             
         }
         /// <summary>
         /// Initialize variable 
         /// </summary>
-        private void Initialize()
+        private void InitializeSound()
         {
             uint version = 0;
             FMOD.RESULT result;
@@ -80,31 +87,35 @@ namespace NRM
         /// <param name="e"></param>
         private void _buttonCalculate_Click(object sender, EventArgs e)
         {
-            Initialize();
-
+            openFileDialog1.Multiselect = true;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                _currentSong = new SongData() { FullName = openFileDialog1.FileName };
-                bool exists = false;
-                foreach (var item in _songCollection)
+                foreach (var filename in openFileDialog1.FileNames)
                 {
-                    if (item.FullName == _currentSong.FullName)
+                    _currentSong = new SongData() { FullName = filename };
+                    bool exists = false;
+                    foreach (var item in _songCollection)
                     {
-                        exists = true;
-                        break;
+                        if (item.FullName == _currentSong.FullName)
+                        {
+                            exists = true;
+                            break;
+                        }
                     }
-                }
-                if (!exists)
-                {
 
-                    PlayMusic();
-                    timer1.Start();
+                    if (!exists)
+                        _newSongCollection.Add(_currentSong);
+                }
+                if(_newSongCollection.Count > 0)
+                {
+                    MoveNextSong();
                 }
                 else
                 {
                     MessageBox.Show("This song is already in the playlist.",
                      "Song already in the playlist.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                
             }
         }
         /// <summary>
@@ -112,6 +123,8 @@ namespace NRM
         /// </summary>
         private void PlayMusic()
         {
+            InitializeSound();
+
             FMOD.RESULT result = FMOD.RESULT.OK;
 
             if (mydsp != null)
@@ -127,7 +140,7 @@ namespace NRM
 
             bpm.reset();
 
-            result = system.createSound(openFileDialog1.FileName, FMOD.MODE.SOFTWARE | FMOD.MODE.CREATESTREAM, ref sound);
+            result = system.createSound(_currentSong.FullName, FMOD.MODE.SOFTWARE | FMOD.MODE.CREATESTREAM, ref sound);
             ERRCHECK(result);
 
             result = system.playSound(FMOD.CHANNELINDEX.FREE, sound, true, ref channel);
@@ -150,6 +163,7 @@ namespace NRM
             ERRCHECK(result);
 
             channel.setPaused(false);
+            channel.setVolume(0.1f);
         }
         /// <summary>
         /// Method responsible for disposing the variables that play the songs
@@ -202,18 +216,30 @@ namespace NRM
                 _textboxSongPlaying.Text = _textBoxBPM.Text = "";
 
                 AddMusicToCollection();
-                
+                _currentPosition++;
+                MoveNextSong();
             }   
             system.update();
+        }
+        /// <summary>
+        /// Get BPMs from the next song 
+        /// </summary>
+        private void MoveNextSong()
+        {
+            if (_currentPosition == _newSongCollection.Count) return;
+            _currentSong = _newSongCollection[_currentPosition];
+            PlayMusic();
+            timer1.Start();
         }
         /// <summary>
         /// Method that adds a song to the collection through the databind
         /// </summary>
         private void AddMusicToCollection()
         {
-            _currentSong.BPM = Convert.ToInt32(bpm.getParameter(BPMDetection.BPMParam.BPMFOUNDBPM).ToString("00")); 
+            _currentSong.BPM    = 
+                Convert.ToInt32(bpm.getParameter(BPMDetection.BPMParam.BPMFOUNDBPM).ToString("00"));
+            _currentSong.Length = GetMp3Length(_currentSong.FullName);
             _bindingSourcePlaylist.Add(_currentSong);
-
         }
         /// <summary>
         /// Readcallback
@@ -287,8 +313,8 @@ namespace NRM
                 Convert.ToInt32(_textBoxDistance.Text),
                 Convert.ToInt32(_textBoxDuration.Text));
             //TODO:Remove this code and determine the calculator formula
-            bpmInterval.MinBPM = 0;
-            bpmInterval.MaxBPM = 200;
+            //bpmInterval.MinBPM = 0;
+            //bpmInterval.MaxBPM = 200;
 
             SongDataColl playlist = GetSongsWithBPM(bpmInterval);
             string path = "c:\\";
@@ -311,6 +337,26 @@ namespace NRM
             }
             return playlist;
         }
+        /// <summary>
+        /// Get song's length
+        /// </summary>
+        /// <param name="filename">Path to the file</param>
+        /// <returns>string with the number of </returns>
+        private string GetMp3Length(string filename)
+        {
+            string length = "0";
+            MediaPlayer player = new MediaPlayer();
+            Uri path = new Uri(@filename);
+            player.Open(path);
+            Thread.Sleep(1000);
+            Duration duration = player.NaturalDuration;
 
+            if (duration.HasTimeSpan)
+            {
+                length = player.NaturalDuration.TimeSpan.ToString();
+            }
+            player.Close();
+            return length;
+        }
     }
 }
