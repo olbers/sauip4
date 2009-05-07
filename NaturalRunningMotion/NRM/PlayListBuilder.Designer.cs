@@ -53,24 +53,26 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this._dataGridViewFinalPlaylist = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lBPM = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this._buttonPlay = new System.Windows.Forms.Button();
             this._buttonStop = new System.Windows.Forms.Button();
-            this._buttonNext = new System.Windows.Forms.Button();
             this._buttonPrevious = new System.Windows.Forms.Button();
+            this._buttonNext = new System.Windows.Forms.Button();
             this._buttonPause = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lBPM = new System.Windows.Forms.Label();
+            this._bindingSourceFinalPlaylist = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this._dgPlaylist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._bindingSourcePlaylist)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._dataGridViewFinalPlaylist)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._bindingSourceFinalPlaylist)).BeginInit();
             this.SuspendLayout();
             // 
             // _buttonCalculate
@@ -246,23 +248,23 @@
             this.label6.Text = "Export Folder:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // dataGridView1
+            // _dataGridViewFinalPlaylist
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this._dataGridViewFinalPlaylist.AllowUserToAddRows = false;
+            this._dataGridViewFinalPlaylist.AllowUserToDeleteRows = false;
+            this._dataGridViewFinalPlaylist.AllowUserToResizeRows = false;
+            this._dataGridViewFinalPlaylist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this._dataGridViewFinalPlaylist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._dataGridViewFinalPlaylist.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.dataGridView1.Location = new System.Drawing.Point(568, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(322, 339);
-            this.dataGridView1.TabIndex = 25;
+            this._dataGridViewFinalPlaylist.Location = new System.Drawing.Point(568, 12);
+            this._dataGridViewFinalPlaylist.Name = "_dataGridViewFinalPlaylist";
+            this._dataGridViewFinalPlaylist.RowHeadersVisible = false;
+            this._dataGridViewFinalPlaylist.Size = new System.Drawing.Size(322, 339);
+            this._dataGridViewFinalPlaylist.TabIndex = 25;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -300,51 +302,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add Musics";
             // 
-            // _buttonPlay
-            // 
-            this._buttonPlay.Location = new System.Drawing.Point(568, 358);
-            this._buttonPlay.Name = "_buttonPlay";
-            this._buttonPlay.Size = new System.Drawing.Size(57, 23);
-            this._buttonPlay.TabIndex = 27;
-            this._buttonPlay.Text = "Play";
-            this._buttonPlay.UseVisualStyleBackColor = true;
-            // 
-            // _buttonStop
-            // 
-            this._buttonStop.Location = new System.Drawing.Point(700, 358);
-            this._buttonStop.Name = "_buttonStop";
-            this._buttonStop.Size = new System.Drawing.Size(57, 23);
-            this._buttonStop.TabIndex = 28;
-            this._buttonStop.Text = "Stop";
-            this._buttonStop.UseVisualStyleBackColor = true;
-            // 
-            // _buttonNext
-            // 
-            this._buttonNext.Location = new System.Drawing.Point(832, 358);
-            this._buttonNext.Name = "_buttonNext";
-            this._buttonNext.Size = new System.Drawing.Size(57, 23);
-            this._buttonNext.TabIndex = 30;
-            this._buttonNext.Text = "Next";
-            this._buttonNext.UseVisualStyleBackColor = true;
-            // 
-            // _buttonPrevious
-            // 
-            this._buttonPrevious.Location = new System.Drawing.Point(766, 358);
-            this._buttonPrevious.Name = "_buttonPrevious";
-            this._buttonPrevious.Size = new System.Drawing.Size(57, 23);
-            this._buttonPrevious.TabIndex = 29;
-            this._buttonPrevious.Text = "Previous";
-            this._buttonPrevious.UseVisualStyleBackColor = true;
-            // 
-            // _buttonPause
-            // 
-            this._buttonPause.Location = new System.Drawing.Point(634, 358);
-            this._buttonPause.Name = "_buttonPause";
-            this._buttonPause.Size = new System.Drawing.Size(57, 23);
-            this._buttonPause.TabIndex = 31;
-            this._buttonPause.Text = "Pause";
-            this._buttonPause.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lBPM);
@@ -356,6 +313,14 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Info:";
             // 
+            // lBPM
+            // 
+            this.lBPM.AutoSize = true;
+            this.lBPM.Location = new System.Drawing.Point(46, 29);
+            this.lBPM.Name = "lBPM";
+            this.lBPM.Size = new System.Drawing.Size(0, 13);
+            this.lBPM.TabIndex = 2;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -365,13 +330,55 @@
             this.label7.TabIndex = 1;
             this.label7.Text = "BPM:";
             // 
-            // lBPM
+            // _buttonPlay
             // 
-            this.lBPM.AutoSize = true;
-            this.lBPM.Location = new System.Drawing.Point(46, 29);
-            this.lBPM.Name = "lBPM";
-            this.lBPM.Size = new System.Drawing.Size(0, 13);
-            this.lBPM.TabIndex = 2;
+            this._buttonPlay.Location = new System.Drawing.Point(568, 358);
+            this._buttonPlay.Name = "_buttonPlay";
+            this._buttonPlay.Size = new System.Drawing.Size(57, 23);
+            this._buttonPlay.TabIndex = 27;
+            this._buttonPlay.Text = "Play";
+            this._buttonPlay.UseVisualStyleBackColor = true;
+            this._buttonPlay.Visible = false;
+            // 
+            // _buttonStop
+            // 
+            this._buttonStop.Location = new System.Drawing.Point(700, 358);
+            this._buttonStop.Name = "_buttonStop";
+            this._buttonStop.Size = new System.Drawing.Size(57, 23);
+            this._buttonStop.TabIndex = 28;
+            this._buttonStop.Text = "Stop";
+            this._buttonStop.UseVisualStyleBackColor = true;
+            this._buttonStop.Visible = false;
+            // 
+            // _buttonPrevious
+            // 
+            this._buttonPrevious.Location = new System.Drawing.Point(766, 358);
+            this._buttonPrevious.Name = "_buttonPrevious";
+            this._buttonPrevious.Size = new System.Drawing.Size(57, 23);
+            this._buttonPrevious.TabIndex = 29;
+            this._buttonPrevious.Text = "Previous";
+            this._buttonPrevious.UseVisualStyleBackColor = true;
+            this._buttonPrevious.Visible = false;
+            // 
+            // _buttonNext
+            // 
+            this._buttonNext.Location = new System.Drawing.Point(832, 358);
+            this._buttonNext.Name = "_buttonNext";
+            this._buttonNext.Size = new System.Drawing.Size(57, 23);
+            this._buttonNext.TabIndex = 30;
+            this._buttonNext.Text = "Next";
+            this._buttonNext.UseVisualStyleBackColor = true;
+            this._buttonNext.Visible = false;
+            // 
+            // _buttonPause
+            // 
+            this._buttonPause.Location = new System.Drawing.Point(634, 358);
+            this._buttonPause.Name = "_buttonPause";
+            this._buttonPause.Size = new System.Drawing.Size(57, 23);
+            this._buttonPause.TabIndex = 31;
+            this._buttonPause.Text = "Pause";
+            this._buttonPause.UseVisualStyleBackColor = true;
+            this._buttonPause.Visible = false;
             // 
             // PlayListBuilder
             // 
@@ -390,7 +397,7 @@
             this.Controls.Add(this._textBoxDuration);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this._textBoxDistance);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this._dataGridViewFinalPlaylist);
             this.Controls.Add(this._dgPlaylist);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -398,11 +405,12 @@
             this.Text = "PlayListBuilder";
             ((System.ComponentModel.ISupportInitialize)(this._dgPlaylist)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._bindingSourcePlaylist)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._dataGridViewFinalPlaylist)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._bindingSourceFinalPlaylist)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -427,13 +435,8 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView _dataGridViewFinalPlaylist;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button _buttonPlay;
-        private System.Windows.Forms.Button _buttonStop;
-        private System.Windows.Forms.Button _buttonNext;
-        private System.Windows.Forms.Button _buttonPrevious;
-        private System.Windows.Forms.Button _buttonPause;
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Length;
         private System.Windows.Forms.DataGridViewTextBoxColumn cBPM;
@@ -443,5 +446,11 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lBPM;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button _buttonPlay;
+        private System.Windows.Forms.Button _buttonStop;
+        private System.Windows.Forms.Button _buttonPrevious;
+        private System.Windows.Forms.Button _buttonNext;
+        private System.Windows.Forms.Button _buttonPause;
+        private System.Windows.Forms.BindingSource _bindingSourceFinalPlaylist;
     }
 }

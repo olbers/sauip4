@@ -33,6 +33,7 @@ namespace NRM
         /// </summary>
         private SongDataColl            _songCollection = new SongDataColl();
         private SongData                _currentSong    = null;
+        private SongDataColl            _playlist       = new SongDataColl();
 
         private SongDataColl            _newSongCollection = new SongDataColl();
         private int                     _currentPosition   = 0;
@@ -70,6 +71,10 @@ namespace NRM
             _dgPlaylist.Columns[1].Width = 50;
             _dgPlaylist.Columns[2].Width = 40;
             _dgPlaylist.DataSource = _bindingSourcePlaylist;
+
+            _dataGridViewFinalPlaylist.AutoGenerateColumns = false;
+            _bindingSourceFinalPlaylist.DataSource = _playlist;
+            _dataGridViewFinalPlaylist.DataSource = _bindingSourceFinalPlaylist;
             
         }
         /// <summary>
@@ -357,6 +362,11 @@ namespace NRM
             string path = "c:\\";
             PlaylistToXML.ExportPlaylist(playlist, path);
             
+            foreach (var item in playlist)
+	        {
+                _bindingSourceFinalPlaylist.Add(item);
+	        }
+
             MessageBox.Show("Playlist exported to the folder: " + path, "Export Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         /// <summary>
