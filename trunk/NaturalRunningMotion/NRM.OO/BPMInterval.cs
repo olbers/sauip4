@@ -18,5 +18,7 @@ namespace NRM.OO
         /// Property with the Maximum BPM
         /// </summary>
         public int MaxBPM { get; set; }
+
+        public int Value { get; set; }
     }
 }

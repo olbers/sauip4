@@ -66,6 +66,9 @@ namespace NRM
         {
             _dgPlaylist.AutoGenerateColumns = false;
             _bindingSourcePlaylist.DataSource = _songCollection;
+            _dgPlaylist.Columns[0].Width = 200;
+            _dgPlaylist.Columns[1].Width = 50;
+            _dgPlaylist.Columns[2].Width = 40;
             _dgPlaylist.DataSource = _bindingSourcePlaylist;
             
         }
@@ -251,10 +254,13 @@ namespace NRM
         /// </summary>
         private void AddMusicToCollection()
         {
+            string songLength = "0";
             _currentSong.BPM    = 
                 Convert.ToInt32(bpm.getParameter(BPMDetection.BPMParam.BPMFOUNDBPM).ToString("00"));
-            _currentSong.Length = GetMp3Length(_currentSong.FullName);
+            _currentSong.LengthSeconds = GetMp3Length(_currentSong.FullName, ref songLength);
+            _currentSong.Length = songLength;
             _bindingSourcePlaylist.Add(_currentSong);
+            
         }
         /// <summary>
         /// Readcallback
@@ -313,12 +319,28 @@ namespace NRM
         {
             if (string.IsNullOrEmpty(_textBoxDistance.Text) || string.IsNullOrEmpty(_textBoxDuration.Text))
             {
-                MessageBox.Show("Please insert the distance and duration of your run.", "Export Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please insert the distance and duration of your run.", "Build Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 if (string.IsNullOrEmpty(_textBoxDistance.Text)) _textBoxDistance.Focus();
                 else _textBoxDuration.Focus();
                 return;
             }
-            ExportPlaylist();
+            int intValidation1;
+            int intValidation2;
+            int.TryParse(_textBoxDistance.Text, out intValidation1);
+            int.TryParse(_textBoxDuration.Text, out intValidation2);
+            if ( intValidation1 == 0 || intValidation2 == 0  )
+            {
+                MessageBox.Show("Please insert valid distance and duration of your run.", "Build Playlist.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (intValidation1 == 0) _textBoxDistance.Focus();
+                else _textBoxDuration.Focus();
+                return;
+            }
+            BPMInterval bpm = NRMAnalytics.GetBPM(int.Parse(_textBoxDistance.Text), int.Parse(_textBoxDuration.Text));
+
+            lBPM.Text = "" + (bpm.Value * int.Parse(_textBoxDuration.Text));
+ 
+
+
         }
 
         private void ExportPlaylist()
@@ -357,9 +379,9 @@ namespace NRM
         /// </summary>
         /// <param name="filename">Path to the file</param>
         /// <returns>string with the number of </returns>
-        private string GetMp3Length(string filename)
+        private int GetMp3Length(string filename, ref string length)
         {
-            string length = "0";
+            int totalSeconds = 0;
             MediaPlayer player = new MediaPlayer();
             Uri path = new Uri(@filename);
             player.Open(path);
@@ -369,10 +391,14 @@ namespace NRM
 
             if (duration.HasTimeSpan)
             {
-                length = player.NaturalDuration.TimeSpan.ToString();
+                length = player.NaturalDuration.TimeSpan.Minutes.ToString() + ":";
+                if (player.NaturalDuration.TimeSpan.Seconds < 10)
+                    length += "0";
+                length += player.NaturalDuration.TimeSpan.Seconds.ToString();
+                totalSeconds = (int)Math.Round(player.NaturalDuration.TimeSpan.TotalSeconds, 0);
             }
             player.Close();
-            return length;
+            return totalSeconds;
         }
     }
 }

@@ -38,6 +38,9 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this._dgPlaylist = new System.Windows.Forms.DataGridView();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cBPM = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._bindingSourcePlaylist = new System.Windows.Forms.BindingSource(this.components);
             this._textboxSongPlaying = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,22 +54,23 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this._buttonPlay = new System.Windows.Forms.Button();
             this._buttonStop = new System.Windows.Forms.Button();
             this._buttonNext = new System.Windows.Forms.Button();
             this._buttonPrevious = new System.Windows.Forms.Button();
             this._buttonPause = new System.Windows.Forms.Button();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cBPM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lBPM = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this._dgPlaylist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._bindingSourcePlaylist)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _buttonCalculate
@@ -113,6 +117,28 @@
             this._dgPlaylist.RowHeadersVisible = false;
             this._dgPlaylist.Size = new System.Drawing.Size(406, 339);
             this._dgPlaylist.TabIndex = 14;
+            // 
+            // cName
+            // 
+            this.cName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.cName.DataPropertyName = "Name";
+            this.cName.HeaderText = "Name";
+            this.cName.Name = "cName";
+            this.cName.ReadOnly = true;
+            // 
+            // Length
+            // 
+            this.Length.DataPropertyName = "Length";
+            this.Length.HeaderText = "Length";
+            this.Length.Name = "Length";
+            this.Length.ReadOnly = true;
+            // 
+            // cBPM
+            // 
+            this.cBPM.DataPropertyName = "BPM";
+            this.cBPM.HeaderText = "BPM";
+            this.cBPM.Name = "cBPM";
+            this.cBPM.ReadOnly = true;
             // 
             // _textboxSongPlaying
             // 
@@ -238,6 +264,28 @@
             this.dataGridView1.Size = new System.Drawing.Size(322, 339);
             this.dataGridView1.TabIndex = 25;
             // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "Length";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Length";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "BPM";
+            this.dataGridViewTextBoxColumn3.HeaderText = "BPM";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this._textBoxBPM);
@@ -297,55 +345,40 @@
             this._buttonPause.Text = "Pause";
             this._buttonPause.UseVisualStyleBackColor = true;
             // 
-            // cName
+            // groupBox2
             // 
-            this.cName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.cName.DataPropertyName = "Name";
-            this.cName.HeaderText = "Name";
-            this.cName.Name = "cName";
-            this.cName.ReadOnly = true;
+            this.groupBox2.Controls.Add(this.lBPM);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Location = new System.Drawing.Point(427, 235);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(129, 116);
+            this.groupBox2.TabIndex = 32;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Info:";
             // 
-            // Length
+            // label7
             // 
-            this.Length.DataPropertyName = "Length";
-            this.Length.HeaderText = "Length";
-            this.Length.Name = "Length";
-            this.Length.ReadOnly = true;
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 29);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(33, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "BPM:";
             // 
-            // cBPM
+            // lBPM
             // 
-            this.cBPM.DataPropertyName = "BPM";
-            this.cBPM.HeaderText = "BPM";
-            this.cBPM.Name = "cBPM";
-            this.cBPM.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "Length";
-            this.dataGridViewTextBoxColumn2.HeaderText = "Length";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "BPM";
-            this.dataGridViewTextBoxColumn3.HeaderText = "BPM";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            this.lBPM.AutoSize = true;
+            this.lBPM.Location = new System.Drawing.Point(46, 29);
+            this.lBPM.Name = "lBPM";
+            this.lBPM.Size = new System.Drawing.Size(0, 13);
+            this.lBPM.TabIndex = 2;
             // 
             // PlayListBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(902, 502);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this._buttonPause);
             this.Controls.Add(this._buttonNext);
             this.Controls.Add(this._buttonPrevious);
@@ -368,6 +401,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,5 +440,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lBPM;
+        private System.Windows.Forms.Label label7;
     }
 }

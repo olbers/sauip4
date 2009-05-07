@@ -17,6 +17,15 @@ namespace NRM.Analytics
         /// </summary>
         public static void InitializeBPMs()
         {
+            //With our reference table we pick the SPM and correspondently BPM
+            // Time per km         SPM/BPM
+            //      10               150
+            //       9               153
+            //       8               156
+            //       7               160
+            //       6               163
+            //       5               166
+            //       4               171
             _bpm.Add(10,150);
             _bpm.Add(9, 153);
             _bpm.Add(8, 156);
@@ -36,7 +45,7 @@ namespace NRM.Analytics
         {
             float bpm = CalculateBPM(distance, timeMinutes);
 
-            _bpmInterval = new BPMInterval() { MinBPM = (int)(bpm - 50), MaxBPM = (int)(bpm + 50) };
+            _bpmInterval = new BPMInterval() { MinBPM = (int)(bpm - 15), MaxBPM = (int)(bpm + 15), Value = (int) Math.Round(bpm,0) };
 
             return _bpmInterval;
         }
@@ -51,15 +60,15 @@ namespace NRM.Analytics
         {
             if(!_initialized)
                 InitializeBPMs();
-            float temp = timeMinutes * 1000 / distance;
-            float bpm = _bpm[10];
-
-            foreach (var item in _bpm)
-        	{
-                if (item.Key == temp)
-                    break;
-                                    
-	        }
+            //calculate time per km
+            int tpk = (int) Math.Round((decimal) (timeMinutes * 1000 / distance), 0);
+             
+            //get bpm trough reference table
+            int bpm = 0;
+            if(_bpm.ContainsKey(tpk))
+            {
+                bpm= _bpm[tpk];
+            }
             return bpm;
         }
     }
